@@ -1,0 +1,67 @@
+.menu{
+	width: 80%;
+	margin: auto;
+	padding: 20px 0;
+}
+.celda{
+	    width: 80%;
+}
+
+a:hover{
+}
+
+.bod{
+	padding:20px;
+}
+
+.imag{
+width: 150px;
+  margin-top: 10px;
+}
+.nav ul li a{
+	color: #062946;
+}
+
+.caption h3{
+  text-align: center;
+}
+.bod{
+	background-image: url(images/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container{
+	width: 80%;
+	margin: auto;
+	/*background-color: black;*/
+}
+.footer{
+	width: 80%;
+	margin: auto;
+	padding: 20px;
+}
+
+.menu ul{
+	float: left;
+}
+
+.menu form{
+	float: right;
+}
+
+.contenido{
+	margin-top: 100px;
+}
+
+.tabla{
+	    padding: 20px 60px !important;
+
+}
+.celda h3{
+	color: #20335A;
+}
+.imagenes{
+	    width: 65%;
+    margin-left: 15px;
+}
