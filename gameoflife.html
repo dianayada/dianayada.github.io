@@ -39,7 +39,7 @@
 				ctx.fillStyle = "#FFF";
 				ctx.fillRect(((xx-1)*10),((xy-1)*10),10,10);
 				matriz[xy][xx]=undefined;
-				ctx.fillStyle = "#F00";
+				ctx.fillStyle = "#000";
 			}
 		},false);
 	}
@@ -55,7 +55,7 @@
 	var canvas,ctx;
 		canvas=document.getElementById("canv");
 		ctx =canvas.getContext("2d");
-		ctx.fillStyle = "#FF0000";
+		ctx.fillStyle = "#000";
 
 
 
@@ -81,7 +81,6 @@
 	}
 	function generacionCero(){
 		for(i=1;i<=lenght;i++){
-			//s="";
 			for(j=1;j<=width;j++){
 				if(Math.random()<.50){
 					matriz[i][j]=true;
