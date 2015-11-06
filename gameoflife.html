@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>The game of life</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+</head>
+<body onLoad=initialise()>
+<div class="container" style="width: 240px;float: left;">	
+	<div class="panel panel-default">
+	  <div class="panel-body">
+	    Width:
+	    <input type="number" class="form-control" id="wid" value="100"  placeholder="Width">
+	    Height:
+	    <input type="number" class="form-control" id="len" value="100" placeholder="Height">
+	    Tiempo:
+	    <input type="number" class="form-control" id="tie" value="1000" placeholder="Tiempo">
+	    <br>
+	    <button type="button" name="cambia" class="btn btn-primary" onclick="javascript: window.reiniciar(1)" >Aceptar</button>
+	  </div>
+	</div>
+</div>
+
+	<canvas id="canv" width="510px" height="510px" style="border: 1px solid #000; ">
+	</canvas>
+	<script type="text/javascript">
+
+	function initialise(){
+		var canvas=document.getElementById("canv");
+		canvas.addEventListener("mousedown",function(event){
+			c_x=event.pageX;
+			c_y=event.pageY	;
+			var pos = document.getElementById("canv").getBoundingClientRect();
+			xx=parseInt(c_x/10-(pos.left/10-1));
+			xy=parseInt(c_y/10-(pos.top/10-1));
+			if(matriz[xx][xy]===undefined){
+				ctx.fillRect(((xx-1)*10),((xy-1)*10),10,10);
+				matriz[xy][xx]=true;
+			}else{
+				ctx.fillStyle = "#FFF";
+				ctx.fillRect(((xx-1)*10),((xy-1)*10),10,10);
+				matriz[xy][xx]=undefined;
+				ctx.fillStyle = "#F00";
+			}
+		},false);
+	}
+
+
+	var matriz=[];
+	var gener=[];
+	var vacio=[]
+	lenght=70;
+	width=90
+	speed=1000;
+	aux=0;
+	var canvas,ctx;
+		canvas=document.getElementById("canv");
+		ctx =canvas.getContext("2d");
+		ctx.fillStyle = "#FF0000";
+
+
+
+	function getSpeed(){
+		window.speed=document.getElementById("tie").value;
+		return(window.speed);
+	}
+	function cambiar(){
+		width=document.getElementById("wid").value;		
+		lenght=document.getElementById("len").value;
+		window.speed=document.getElementById("tie").value;
+		document.getElementById("canv").width=parseInt(window.width)*10+10;
+		document.getElementById("canv").height=parseInt(window.lenght)*10+10;
+		ctx.fillStyle = "#000";
+	}
+
+	function inicializar(){
+		for(i=0;i<=lenght+2;i++){
+			matriz[i]=new Array(width+2);
+			gener[i]=new Array(width+2);
+			vacio[i]=new Array(width+2);
+		}
+	}
+	function generacionCero(){
+		for(i=1;i<=lenght;i++){
+			//s="";
+			for(j=1;j<=width;j++){
+				if(Math.random()<.50){
+					matriz[i][j]=true;
+				}
+			}
+		}
+	}	
+
+	function imprimir(){
+		ctx.clearRect(0, 0, 900, 900);
+		for(i=1;i<=lenght;i++){
+			s="";
+			for(j=1 ;j<=width;j++){
+				if(matriz[i][j]==true){
+					ctx.fillRect((j-1)*10,(i-1)*10,10,10);	
+					s+="*"
+				}else{
+					s+="-";
+				}
+			}
+		}
+	}	
+
+	function reiniciar(a){
+		aux=a;
+		cambiar();
+		inicializar();
+		generacionCero();
+		imprimir();
+	}
+	reiniciar(0);
+
+	function generacion(){
+
+		for(i=1;i<=lenght;i++){
+			for(j=1;j<=width;j++){
+				gener[i][j]=matriz[i][j];
+				matriz[i][j]=vacio[i][j];
+
+			}
+		}
+
+		for(i=1;i<=lenght;i++){
+			for(j=1 ;j<=width;j++){
+				cont=0;
+				if(gener[i-1][j-1]===true){cont++;}
+				if(gener[i-1][j]===true){cont++;}
+				if(gener[i-1][j+1]===true){cont++;}
+				if(gener[i][j-1]===true){cont++;}
+				if(gener[i][j+1]===true){cont++;}
+				if(gener[i+1][j-1]===true){cont++;}
+				if(gener[i+1][j]===true){cont++;}
+				if(gener[i+1][j+1]===true){cont++;}
+				if(gener[i][j]==true){
+					if(cont==2 || cont==3){
+						matriz[i][j]=true;
+					}else{
+						matriz[i][j]=undefined;
+					}					 
+				}else{
+					if(cont==3){
+						matriz[i][j]=true;
+					}else{
+						matriz[i][j]=undefined;
+					}
+				}				
+			}			
+		}
+		imprimir();
+	}
+	
+	function iniciar(){
+		itv=setInterval(function(){
+			if(aux==1){
+				aux=0;
+				clearInterval(itv);
+				iniciar();
+			}else{
+				generacion();
+			}
+		},getSpeed());
+	}
+	iniciar();
+	</script>
+</body>
+</html>
